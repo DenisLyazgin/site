@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>АСУП "Шоколадный орешик"</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <h1>АСУП «Шоколадный орешик»</h1>
+      <button id="loginBtn">🔐 Войти</button>
+      <button id="logoutBtn" style="display:none;">🚪 Выйти</button>
+    </div>
+
+    <nav id="menuBar" style="display:none;">
+      <ul id="menu">
+        <li data-module="production">🍫 Производство</li>
+        <li data-module="quality">🔬 Качество и R&D</li>
+        <li data-module="logistics">🚚 Логистика и склад</li>
+        <li data-module="supply">📦 Снабжение и продажи</li>
+        <li data-module="finance">💰 Финансы и аналитика</li>
+        <li data-module="support">🧰 Техническая поддержка</li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="content"></main>
+
+  <footer>
+    <p>© 2025 ООО «Шоколадный орешик»</p>
+  </footer>
+
+  <!-- Модальное окно входа -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <h2>Вход в систему</h2>
+      <input type="text" id="loginInput" placeholder="Логин">
+      <input type="password" id="passInput" placeholder="Пароль">
+      <button id="submitLogin">Войти</button>
+      <button id="cancelLogin">Отмена</button>
+      <p id="loginError" style="color:red;display:none;">Неверные данные!</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

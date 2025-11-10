@@ -116,6 +116,44 @@ button:hover {
   transform: translateY(-2px);
 }
 
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.data-table th, .data-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+.data-table th {
+  background: #8b4513;
+  color: #fff;
+}
+.btn {
+  background: #8b4513;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.btn:hover {
+  background: #a0522d;
+}
+.form-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 15px;
+}
+.form-block input, .form-block select, .form-block textarea {
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+
 /* Анимации */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }

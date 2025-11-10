@@ -7,12 +7,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitLogin = document.getElementById("submitLogin");
   const cancelLogin = document.getElementById("cancelLogin");
 
-  // Проверка роли
-  const isDirector = localStorage.getItem("role") === "director";
-  if (isDirector) showDirectorView();
-  else showGuestView();
+  const role = localStorage.getItem("role");
+  switch (role) {
+    case "director": showDirectorView(); break;
+    case "supplier": showSupplierView(); break;
+    case "worker": showWorkerView(); break;
+    case "master": showMasterView(); break;
+  default: showGuestView(); break;
+}
 
-  // ---------------------- ГОСТЕВОЙ РЕЖИМ ----------------------
+
   function showGuestView() {
     menuBar.style.display = "none";
     logoutBtn.style.display = "none";
@@ -71,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
     animateBackground();
   }
 
-  // ---------------------- СЛАЙДЕР ----------------------
   function startSlider() {
     const slides = document.querySelectorAll(".slide");
     let index = 0;
@@ -82,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 4000);
   }
 
-  // ---------------------- АНИМАЦИЯ ФОНА ----------------------
   function animateBackground() {
     const existingCanvas = document.getElementById("chocoCanvas");
     if (existingCanvas) existingCanvas.remove();
@@ -128,7 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   }
 
-  // ---------------------- ДИРЕКТОР ----------------------
   function showDirectorView() {
     menuBar.style.display = "block";
     logoutBtn.style.display = "block";
@@ -140,11 +141,71 @@ document.addEventListener("DOMContentLoaded", () => {
     activateMenu();
   }
 
-  // ---------------------- ВХОД ----------------------
+  function showSupplierView() {
+  menuBar.style.display = "block";
+  logoutBtn.style.display = "block";
+  loginBtn.style.display = "none";
+
+  menuBar.innerHTML = `
+    <ul id="menu">
+      <li data-module="deliveries">🚚 Поставки</li>
+      <li data-module="warehouse">🏭 Склад</li>
+    </ul>
+  `;
+
+  content.innerHTML = `
+    <h2 class="fade-in">Добро пожаловать, поставщик!</h2>
+    <p>Вы можете добавлять новые поставки и отслеживать складские запасы.</p>
+  `;
+
+  activateMenu();
+}
+
+function showWorkerView() {
+  menuBar.style.display = "block";
+  logoutBtn.style.display = "block";
+  loginBtn.style.display = "none";
+
+  menuBar.innerHTML = `
+    <ul id="menu">
+      <li data-module="receive">📦 Принятие поставок</li>
+      <li data-module="equipment">⚙️ Оборудование</li>
+      <li data-module="report_issue">🛠 Сообщить о поломке</li>
+    </ul>
+  `;
+
+  content.innerHTML = `
+    <h2 class="fade-in">Добро пожаловать, сотрудник цеха!</h2>
+    <p>Вы можете принимать поставки, следить за оборудованием и сообщать о неисправностях.</p>
+  `;
+
+  activateMenu();
+}
+
+function showMasterView() {
+  menuBar.style.display = "block";
+  logoutBtn.style.display = "block";
+  loginBtn.style.display = "none";
+
+  menuBar.innerHTML = `
+    <ul id="menu">
+      <li data-module="issues">📋 Поломки</li>
+      <li data-module="fixed">✅ Завершение ремонта</li>
+    </ul>
+  `;
+
+  content.innerHTML = `
+    <h2 class="fade-in">Добро пожаловать, мастер смены!</h2>
+    <p>Вы можете просматривать поломки оборудования и отмечать ремонт.</p>
+  `;
+
+  activateMenu();
+}
+
+
   loginBtn.addEventListener("click", () => modal.classList.add("show"));
   cancelLogin.addEventListener("click", () => modal.classList.remove("show"));
 
-  // Эффект "тающего" шоколада при наведении
   loginBtn.addEventListener("mouseenter", () => loginBtn.classList.add("melt"));
   loginBtn.addEventListener("mouseleave", () => loginBtn.classList.remove("melt"));
 
@@ -157,10 +218,23 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("role", "director");
       modal.classList.remove("show");
       showDirectorView();
+    } else if (login === "supplier" && pass === "12345") {
+      localStorage.setItem("role", "supplier");
+      modal.classList.remove("show");
+      showSupplierView();
+    } else if (login === "worker" && pass === "12345") {
+      localStorage.setItem("role", "worker");
+      modal.classList.remove("show");
+      showWorkerView();
+    } else if (login === "master" && pass === "12345") {
+      localStorage.setItem("role", "master");
+      modal.classList.remove("show");
+      showMasterView();
     } else {
       error.style.opacity = 1;
       setTimeout(() => (error.style.opacity = 0), 2000);
     }
+
   });
 
   logoutBtn.addEventListener("click", () => {
@@ -168,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showGuestView();
   });
 
-  // ---------------------- АКТИВАЦИЯ МЕНЮ ----------------------
+  //менюшка вроде норм
   function activateMenu() {
     const menuItems = document.querySelectorAll("#menu li");
     menuItems.forEach(item => {
